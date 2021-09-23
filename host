@@ -1,0 +1,17 @@
+[server-1]
+ansible-1	ansible_ssh_host=172.101.0.101 ansible_user=root
+[server-2]
+ansible-2	ansible_ssh_host=172.101.0.102 ansible_user=root
+[server-3]
+ansible-3	ansible_ssh_host=172.101.0.103 ansible_user=root
+[server-4]
+ansible-4	ansible_ssh_host=172.101.0.104 ansible_user=root
+[server-5]
+ansible-5	ansible_ssh_host=172.101.0.105 ansible_user=root
+[server-all]
+ansible-1	ansible_ssh_host=172.101.0.101 ansible_user=root
+ansible-2	ansible_ssh_host=172.101.0.102 ansible_user=root
+ansible-3	ansible_ssh_host=172.101.0.103 ansible_user=root
+ansible-4	ansible_ssh_host=172.101.0.104 ansible_user=root
+ansible-5	ansible_ssh_host=172.101.0.105 ansible_user=root
+

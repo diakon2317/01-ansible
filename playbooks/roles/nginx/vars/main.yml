@@ -1,0 +1,5 @@
+---
+    hostname_1: site1.lan
+    cgi_port: 9000
+    root: /www/localhost
+

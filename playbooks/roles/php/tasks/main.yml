@@ -1,0 +1,25 @@
+---
+  - name: Install PHP
+    yum: 
+      name:
+        - php
+        - php-bcmath
+        - php-pdo
+        - php-fpm
+        - php-mysql
+      state: present
+    notify:
+        - php-fpm start
+
+  - name: Enable services php-fpm
+    service: 
+      name: php-fpm 
+      enabled: yes
+
+
+  - name: Add index.html
+    template: src=index.html dest={{ root }}/{{ hostname_1 }}/index.html owner=nginx group=nginx
+  - name: Add phpinfo.php
+    template: src=phpinfo.php dest={{ root }}/{{ hostname_1 }}/phpinfo.php owner=nginx group=nginx
+ 
+

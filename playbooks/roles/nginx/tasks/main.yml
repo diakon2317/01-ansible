@@ -1,0 +1,22 @@
+---
+  - name: Install epel-relese
+    yum: name=epel-release
+
+  - name: Install Nginx
+    yum: name=nginx
+    notify:
+        - nginx start
+
+  - name: Enabled service nginx
+    service: 
+      name: nginx
+      enabled: yes
+
+  - name: Add NGINX cofig
+    template: src={{ hostname_1 }}.conf dest=/etc/nginx/conf.d/{{ hostname_1 }}.conf owner=nginx group=nginx
+ 
+  - name: Create Web Root
+    file: path={{ root }}/{{ hostname_1 }}  mode=775 state=directory owner=nginx group=nginx
+    notify:
+        - nginx restart
+
