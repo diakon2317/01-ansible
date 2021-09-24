@@ -1,6 +1,6 @@
 ---
   - name: Install PHP
-    yum: 
+    apt: 
       name:
         - php
         - php-bcmath
@@ -13,13 +13,13 @@
 
   - name: Enable services php-fpm
     service: 
-      name: php-fpm 
+      name: php7.4-fpm
       enabled: yes
 
 
   - name: Add index.html
-    template: src=index.html dest={{ root }}/{{ hostname_1 }}/index.html owner=nginx group=nginx
+    template: src=index.html dest={{ root }}/{{ hostname_1 }}/index.html
   - name: Add phpinfo.php
-    template: src=phpinfo.php dest={{ root }}/{{ hostname_1 }}/phpinfo.php owner=nginx group=nginx
+    template: src=phpinfo.php dest={{ root }}/{{ hostname_1 }}/phpinfo.php
  
 

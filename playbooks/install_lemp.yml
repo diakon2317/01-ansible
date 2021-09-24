@@ -1,18 +1,13 @@
 - hosts: server-1
 
   pre_tasks:
-  - name: Put SELinux in permissive mode
-    ansible.posix.selinux:
-      policy: targeted
-      state: permissive
   - name: Upgrade all packages
-    yum: name=* state=latest
+    apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
   - name: Install optional software
-    yum: 
+    apt:
       name:
         - mc
         - nano
-        - net-tools
       state: present
 
   - name: Reboot
@@ -21,8 +16,6 @@
     poll: 0
     ignore_errors: true
     register: reboot
-
-
 
   - name: wait for the server to restart
     local_action: wait_for host={{ inventory_hostname }}
@@ -35,5 +28,4 @@
   roles:
     - nginx
     - php
-    - firewalld
     - mysql

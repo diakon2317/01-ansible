@@ -21,7 +21,7 @@
 
 DROP TABLE IF EXISTS `testtable`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!50503 SET character_set_client = utf8 */;
 CREATE TABLE `testtable` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `firstname` varchar(30) NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE `testtable` (
   `email` varchar(50) DEFAULT NULL,
   `reg_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

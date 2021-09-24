@@ -3,9 +3,6 @@ PLAY [server-1] ****************************************************************
 TASK [Gathering Facts] ***************************************************************************************************************************************************************************
 ok: [ansible-1]
 
-TASK [Put SELinux in permissive mode] ************************************************************************************************************************************************************
-changed: [ansible-1]
-
 TASK [Upgrade all packages] **********************************************************************************************************************************************************************
 changed: [ansible-1]
 
@@ -18,14 +15,11 @@ changed: [ansible-1]
 TASK [wait for the server to restart] ************************************************************************************************************************************************************
 ok: [ansible-1 -> localhost]
 
-TASK [nginx : Install epel-relese] ***************************************************************************************************************************************************************
-changed: [ansible-1]
-
 TASK [nginx : Install Nginx] *********************************************************************************************************************************************************************
 changed: [ansible-1]
 
 TASK [nginx : Enabled service nginx] *************************************************************************************************************************************************************
-changed: [ansible-1]
+ok: [ansible-1]
 
 TASK [nginx : Add NGINX cofig] *******************************************************************************************************************************************************************
 changed: [ansible-1]
@@ -37,7 +31,7 @@ TASK [php : Install PHP] *******************************************************
 changed: [ansible-1]
 
 TASK [php : Enable services php-fpm] *************************************************************************************************************************************************************
-changed: [ansible-1]
+ok: [ansible-1]
 
 TASK [php : Add index.html] **********************************************************************************************************************************************************************
 changed: [ansible-1]
@@ -45,40 +39,16 @@ changed: [ansible-1]
 TASK [php : Add phpinfo.php] *********************************************************************************************************************************************************************
 changed: [ansible-1]
 
-TASK [firewalld : enable 80 port] ****************************************************************************************************************************************************************
-changed: [ansible-1]
-
-TASK [firewalld : reload service firewalld] ******************************************************************************************************************************************************
-changed: [ansible-1]
-
-TASK [mysql : Add mysql repo] ********************************************************************************************************************************************************************
-changed: [ansible-1]
-
 TASK [mysql : Install MySQL] *********************************************************************************************************************************************************************
 changed: [ansible-1]
 
 TASK [mysql : start services mysqld] *************************************************************************************************************************************************************
-changed: [ansible-1]
+ok: [ansible-1]
 
 TASK [mysql : Copy database] *********************************************************************************************************************************************************************
 changed: [ansible-1]
 
-TASK [mysql : Find temporary password mysqld] ****************************************************************************************************************************************************
-changed: [ansible-1]
-
-TASK [mysql : Set new password from temporary password] ******************************************************************************************************************************************
-changed: [ansible-1]
-
-TASK [mysql : Flush privileges] ******************************************************************************************************************************************************************
-changed: [ansible-1]
-
-TASK [mysql : Install requirements pkg to import db] *********************************************************************************************************************************************
-changed: [ansible-1]
-
-TASK [mysql : Execute install pip script] ********************************************************************************************************************************************************
-changed: [ansible-1]
-
-TASK [mysql : Download mysql connector] **********************************************************************************************************************************************************
+TASK [mysql : Install pip] ***********************************************************************************************************************************************************************
 changed: [ansible-1]
 
 TASK [mysql : Install mysql python package] ******************************************************************************************************************************************************
@@ -88,18 +58,21 @@ TASK [mysql : Start the importing DB] ******************************************
 changed: [ansible-1]
 
 RUNNING HANDLER [nginx : nginx start] ************************************************************************************************************************************************************
-changed: [ansible-1]
+ok: [ansible-1]
 
 RUNNING HANDLER [nginx : nginx restart] **********************************************************************************************************************************************************
 changed: [ansible-1]
 
 RUNNING HANDLER [php : php-fpm start] ************************************************************************************************************************************************************
-changed: [ansible-1]
+ok: [ansible-1]
 
 PLAY RECAP ***************************************************************************************************************************************************************************************
-ansible-1                  : ok=32   changed=30   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+ansible-1                  : ok=22   changed=15   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 
-[root@ansible-main ansible]# curl http://ansible-1/index.html
+[root@ansible-main ansible]# 
+[root@ansible-main ansible]# 
+[root@ansible-main ansible]# 
+[root@ansible-main ansible]# curl http://site1.lan
 <!DOCTYPE html>
 <html>
     <head>
@@ -109,56 +82,39 @@ ansible-1                  : ok=32   changed=30   unreachable=0    failed=0    s
         <p>This is an example of a simple HTML page with one paragraph.</p>
     </body>
 </html>
-[root@ansible-main ansible]# curl http://ansible-1/phpinfo.php |more
+[root@ansible-main ansible]# 
+[root@ansible-main ansible]# 
+[root@ansible-main ansible]# 
+[root@ansible-main ansible]# 
+[root@ansible-main ansible]# 
+[root@ansible-main ansible]# curl http://site1.lan/phpinfo.php |more
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
-100 43914    0 43914    0     0  2237k      0 --:--:-- --:--:-- --:--:-- 2257k
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
 <style type="text/css">
-body {background-color: #ffffff; color: #000000;}
-body, td, th, h1, h2 {font-family: sans-serif;}
-pre {margin: 0px; font-family: monospace;}
-a:link {color: #000099; text-decoration: none; background-color: #ffffff;}
+body {background-color: #fff; color: #222; font-family: sans-serif;}
+pre {margin: 0; font-family: monospace;}
+a:link {color: #009; text-decoration: none; background-color: #fff;}
 a:hover {text-decoration: underline;}
-table {border-collapse: collapse;}
+table {border-collapse: collapse; border: 0; width: 934px; box-shadow: 1px 2px 3px #ccc;}
 .center {text-align: center;}
-.center table { margin-left: auto; margin-right: auto; text-align: left;}
-.center th { text-align: center !important; }
-td, th { border: 1px solid #000000; font-size: 75%; vertical-align: baseline;}
+.center table {margin: 1em auto; text-align: left;}
+.center th {text-align: center !important;}
+td, th {border: 1px solid #666; font-size: 75%; vertical-align: baseline; padding: 4px 5px;}
+th {position: sticky; top: 0; background: inherit;}
 h1 {font-size: 150%;}
 h2 {font-size: 125%;}
 .p {text-align: left;}
-.e {background-color: #ccccff; font-weight: bold; color: #000000;}
-.h {background-color: #9999cc; font-weight: bold; color: #000000;}
-.v {background-color: #cccccc; color: #000000;}
-.vr {background-color: #cccccc; text-align: right; color: #000000;}
-img {float: right; border: 0px;}
-hr {width: 600px; background-color: #cccccc; border: 0px; height: 1px; color: #000000;}
+.e {background-color: #ccf; width: 300px; font-weight: bold;}
+.h {background-color: #99c; font-weight: bold;}
+.v {background-color: #ddd; max-width: 300px; overflow-x: auto; word-wrap: break-word;}
+.v i {color: #999;}
+img {float: right; border: 0;}
+hr {width: 934px; background-color: #ccc; border: 0; height: 1px;}
 </style>
-<title>phpinfo()</title><meta name="ROBOTS" content="NOINDEX,NOFOLLOW,NOARCHIVE" /></head>
+<title>PHP 7.4.21 - phpinfo()</title><meta name="ROBOTS" content="NOINDEX,NOFOLLOW,NOARCHIVE" /></head>
 <body><div class="center">
-<table border="0" cellpadding="3" width="600">
+<table>
 <tr class="h"><td>
-<a href="http://www.php.net/"><img border="0" src="/phpinfo.php?=PHPE9568F34-D428-11d2-A769-00AA001ACF42" alt="PHP Logo" /></a><h1 class="p">PHP Version 5.4.16</h1>
-</td></tr>
-</table><br />
-<table border="0" cellpadding="3" width="600">
-<tr><td class="e">System </td><td class="v">Linux ansible-1 3.10.0-1160.42.2.el7.x86_64 #1 SMP Tue Sep 7 14:49:57 UTC 2021 x86_64 </td></tr>
-<tr><td class="e">Build Date </td><td class="v">Apr  1 2020 04:09:10 </td></tr>
-<tr><td class="e">Server API </td><td class="v">FPM/FastCGI </td></tr>
-<tr><td class="e">Virtual Directory Support </td><td class="v">disabled </td></tr>
-<tr><td class="e">Configuration File (php.ini) Path </td><td class="v">/etc </td></tr>
-<tr><td class="e">Loaded Configuration File </td><td class="v">/etc/php.ini </td></tr>
-<tr><td class="e">Scan this dir for additional .ini files </td><td class="v">/etc/php.d </td></tr>
-<tr><td class="e">Additional .ini files parsed </td><td class="v">/etc/php.d/bcmath.ini,
-/etc/php.d/curl.ini,
-/etc/php.d/fileinfo.ini,
-/etc/php.d/json.ini,
-/etc/php.d/mysql.ini,
-/etc/php.d/mysqli.ini,
-/etc/php.d/pdo.ini,
-/etc/php.d/pdo_mysql.ini,
-/etc/php.d/pdo_sqlite.ini,
-/etc/php.d/phar.ini,
 

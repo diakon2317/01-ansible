@@ -1,9 +1,6 @@
 ---
-  - name: Install epel-relese
-    yum: name=epel-release
-
   - name: Install Nginx
-    yum: name=nginx
+    apt: name=nginx
     notify:
         - nginx start
 
@@ -13,10 +10,10 @@
       enabled: yes
 
   - name: Add NGINX cofig
-    template: src={{ hostname_1 }}.conf dest=/etc/nginx/conf.d/{{ hostname_1 }}.conf owner=nginx group=nginx
+    template: src={{ hostname_1 }}.conf dest=/etc/nginx/conf.d/{{ hostname_1 }}.conf
  
   - name: Create Web Root
-    file: path={{ root }}/{{ hostname_1 }}  mode=775 state=directory owner=nginx group=nginx
+    file: path={{ root }}/{{ hostname_1 }}  mode=775 state=directory
     notify:
         - nginx restart
 

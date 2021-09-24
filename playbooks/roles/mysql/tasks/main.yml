@@ -1,9 +1,6 @@
 ---
-  - name: Add mysql repo
-    yum: name=http://dev.mysql.com/get/mysql80-community-release-el7-1.noarch.rpm state=present
-
   - name: Install MySQL
-    yum: name=mysql-community-server
+    apt: name=default-mysql-server
 
   - name: start services mysqld
     service: 
@@ -14,48 +11,19 @@
 
   - name: Copy database
     template: src=database.sql dest=/tmp/database.sql
+
+  - name: Install pip
+    apt: name=python3-pip
  
-  - name: Find temporary password mysqld
-    shell: >
-                awk -F': ' '$0 ~ "temporary password"{print $2}' /var/log/mysqld.log
-    register: mysql_root_password_temp
-    tags: register
-    
-  - name: Set new password from temporary password
-    shell: >
-             mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'MyN3wP4ssw0rd@!';" --connect-expired-password  -uroot -p"{{ mysql_root_password_temp.stdout }}"
-
-  - name: Flush privileges
-    shell: >
-             mysql -e "flush privileges;" --connect-expired-password  -uroot -p"MyN3wP4ssw0rd@!"
-
-  - name: Install requirements pkg to import db
-    yum: 
-      name:
-        - mysql-devel
-        - gcc
-        - python-devel
-
-  - name: Execute install pip script
-    script: roles/mysql/templates/pip-installer.py
-    run_once: true
-
-  - name: Download mysql connector
-    get_url:
-       url: https://raw.githubusercontent.com/paulfitz/mysql-connector-c/master/include/my_config.h
-       dest: /usr/include/mysql/my_config.h
-       mode: '0755'
-
   - name: Install mysql python package
     pip:
-      name: MySQL-python
+      name: PyMySQl
 
 
   - name: Start the importing DB
     mysql_db:
       name: restore_db_name
-      login_unix_socket: /var/lib/mysql/mysql.sock
+      login_unix_socket: /run/mysqld/mysqld.sock
       state: import
       target: /tmp/database.sql
       login_user: root
-      login_password: 'MyN3wP4ssw0rd@!'
