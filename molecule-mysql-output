@@ -1,0 +1,170 @@
+(molecule) root@ansible:~/ansible/playbooks/roles/mysql# molecule test
+INFO     default scenario test matrix: dependency, lint, cleanup, destroy, syntax, create, prepare, converge, idempotence, side_effect, verify, cleanup, destroy
+INFO     Performing prerun...
+INFO     Added ANSIBLE_LIBRARY=/root/.cache/ansible-compat/589c65/modules:/root/.ansible/plugins/modules:/usr/share/ansible/plugins/modules
+INFO     Added ANSIBLE_COLLECTIONS_PATH=/root/.cache/ansible-compat/589c65/collections:/root/.ansible/collections:/usr/share/ansible/collections
+INFO     Added ANSIBLE_ROLES_PATH=/root/.cache/ansible-compat/589c65/roles:/root/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+INFO     Running default > dependency
+WARNING  Skipping, missing the requirements file.
+WARNING  Skipping, missing the requirements file.
+INFO     Running default > lint
+INFO     Lint is disabled.
+INFO     Running default > cleanup
+WARNING  Skipping, cleanup playbook not configured.
+INFO     Running default > destroy
+INFO     Sanity checks: 'docker'
+
+PLAY [Destroy] *****************************************************************
+
+TASK [Destroy molecule instance(s)] ********************************************
+changed: [localhost] => (item=debianOS)
+
+TASK [Wait for instance(s) deletion to complete] *******************************
+FAILED - RETRYING: Wait for instance(s) deletion to complete (300 retries left).
+ok: [localhost] => (item=debianOS)
+
+TASK [Delete docker networks(s)] ***********************************************
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=2    changed=1    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+INFO     Running default > syntax
+
+playbook: /root/ansible/playbooks/roles/mysql/molecule/default/converge.yml
+INFO     Running default > create
+
+PLAY [Create] ******************************************************************
+
+TASK [Log into a Docker registry] **********************************************
+skipping: [localhost] => (item=None) 
+skipping: [localhost]
+
+TASK [Check presence of custom Dockerfiles] ************************************
+ok: [localhost] => (item={'dockerfile': 'Dockerfile.j2', 'image': 'debian', 'name': 'debianOS', 'pre_build_image': False})
+
+TASK [Create Dockerfiles from image names] *************************************
+changed: [localhost] => (item={'dockerfile': 'Dockerfile.j2', 'image': 'debian', 'name': 'debianOS', 'pre_build_image': False})
+
+TASK [Discover local Docker images] ********************************************
+ok: [localhost] => (item={'diff': [], 'dest': '/root/.cache/molecule/mysql/default/Dockerfile_debian', 'src': '/root/.ansible/tmp/ansible-tmp-1632674969.0988746-104425-44287237019732/source', 'md5sum': '55f244ac3b5a5b4a09a80317ad3a9f62', 'checksum': '5db7d6df8658287f71a792c3ab3759bebf29e063', 'changed': True, 'uid': 0, 'gid': 0, 'owner': 'root', 'group': 'root', 'mode': '0600', 'state': 'file', 'size': 71, 'invocation': {'module_args': {'src': '/root/.ansible/tmp/ansible-tmp-1632674969.0988746-104425-44287237019732/source', 'dest': '/root/.cache/molecule/mysql/default/Dockerfile_debian', 'mode': '0600', 'follow': False, '_original_basename': 'Dockerfile.j2', 'checksum': '5db7d6df8658287f71a792c3ab3759bebf29e063', 'backup': False, 'force': True, 'unsafe_writes': False, 'content': None, 'validate': None, 'directory_mode': None, 'remote_src': None, 'local_follow': None, 'owner': None, 'group': None, 'seuser': None, 'serole': None, 'selevel': None, 'setype': None, 'attributes': None}}, 'failed': False, 'item': {'dockerfile': 'Dockerfile.j2', 'image': 'debian', 'name': 'debianOS', 'pre_build_image': False}, 'ansible_loop_var': 'item', 'i': 0, 'ansible_index_var': 'i'})
+
+TASK [Build an Ansible compatible image (new)] *********************************
+ok: [localhost] => (item=molecule_local/debian)
+
+TASK [Create docker network(s)] ************************************************
+
+TASK [Determine the CMD directives] ********************************************
+ok: [localhost] => (item={'dockerfile': 'Dockerfile.j2', 'image': 'debian', 'name': 'debianOS', 'pre_build_image': False})
+
+TASK [Create molecule instance(s)] *********************************************
+changed: [localhost] => (item=debianOS)
+
+TASK [Wait for instance(s) creation to complete] *******************************
+FAILED - RETRYING: Wait for instance(s) creation to complete (300 retries left).
+changed: [localhost] => (item={'started': 1, 'finished': 0, 'ansible_job_id': '470055998772.104576', 'results_file': '/root/.ansible_async/470055998772.104576', 'changed': True, 'failed': False, 'item': {'dockerfile': 'Dockerfile.j2', 'image': 'debian', 'name': 'debianOS', 'pre_build_image': False}, 'ansible_loop_var': 'item'})
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=7    changed=3    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0
+
+INFO     Running default > prepare
+WARNING  Skipping, prepare playbook not configured.
+INFO     Running default > converge
+
+PLAY [Converge] ****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [debianOS]
+
+TASK [Include mysql] ***********************************************************
+
+TASK [mysql : Install MySQL] ***************************************************
+changed: [debianOS]
+
+TASK [mysql : Check if Service mysqld Exists] **********************************
+ok: [debianOS]
+
+TASK [mysql : Start Service mysqld] ********************************************
+skipping: [debianOS]
+
+TASK [mysql : Check if Service mariadb Exists] *********************************
+ok: [debianOS]
+
+TASK [mysql : Start Service mariadb] *******************************************
+changed: [debianOS]
+
+TASK [mysql : Copy database] ***************************************************
+changed: [debianOS]
+
+TASK [mysql : Install pip] *****************************************************
+changed: [debianOS]
+
+TASK [mysql : Install mysql python package] ************************************
+changed: [debianOS]
+
+TASK [mysql : Start the importing DB] ******************************************
+changed: [debianOS]
+
+PLAY RECAP *********************************************************************
+debianOS                   : ok=9    changed=6    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+INFO     Running default > idempotence
+
+PLAY [Converge] ****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [debianOS]
+
+TASK [Include mysql] ***********************************************************
+
+TASK [mysql : Install MySQL] ***************************************************
+ok: [debianOS]
+
+TASK [mysql : Check if Service mysqld Exists] **********************************
+ok: [debianOS]
+
+TASK [mysql : Start Service mysqld] ********************************************
+skipping: [debianOS]
+
+TASK [mysql : Check if Service mariadb Exists] *********************************
+ok: [debianOS]
+
+TASK [mysql : Start Service mariadb] *******************************************
+ok: [debianOS]
+
+TASK [mysql : Copy database] ***************************************************
+ok: [debianOS]
+
+TASK [mysql : Install pip] *****************************************************
+ok: [debianOS]
+
+TASK [mysql : Install mysql python package] ************************************
+ok: [debianOS]
+
+TASK [mysql : Start the importing DB] ******************************************
+changed: [debianOS]
+
+PLAY RECAP *********************************************************************
+debianOS                   : ok=9    changed=1    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+CRITICAL Idempotence test failed because of the following tasks:
+*  => mysql : Start the importing DB
+WARNING  An error occurred during the test sequence action: 'idempotence'. Cleaning up.
+INFO     Running default > cleanup
+WARNING  Skipping, cleanup playbook not configured.
+INFO     Running default > destroy
+
+PLAY [Destroy] *****************************************************************
+
+TASK [Destroy molecule instance(s)] ********************************************
+changed: [localhost] => (item=debianOS)
+
+TASK [Wait for instance(s) deletion to complete] *******************************
+FAILED - RETRYING: Wait for instance(s) deletion to complete (300 retries left).
+changed: [localhost] => (item=debianOS)
+
+TASK [Delete docker networks(s)] ***********************************************
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=2    changed=2    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+INFO     Pruning extra files from scenario ephemeral directory

@@ -2,12 +2,21 @@
   - name: Install MySQL
     apt: name=default-mysql-server
 
-  - name: start services mysqld
-    service: 
-      name: mysqld
-      state: started 
-      enabled: yes
+  - name: Check if Service mysqld Exists
+    stat: path=/etc/init.d/mysqld
+    register: service_status
 
+  - name: Start Service mysqld
+    service: name=mysqld state=started
+    when: service_status.stat.exists
+
+  - name: Check if Service mariadb Exists
+    stat: path=/etc/init.d/mariadb
+    register: service_status
+
+  - name: Start Service mariadb
+    service: name=mariadb state=started
+    when: service_status.stat.exists
 
   - name: Copy database
     template: src=database.sql dest=/tmp/database.sql
@@ -18,7 +27,6 @@
   - name: Install mysql python package
     pip:
       name: PyMySQl
-
 
   - name: Start the importing DB
     mysql_db:

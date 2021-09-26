@@ -16,7 +16,11 @@
       name: php7.4-fpm
       enabled: yes
 
-
+  - name: Creates directory
+    file:
+      path: "{{ root }}/{{ hostname_1 }}"
+      state: directory
+                  
   - name: Add index.html
     template: src=index.html dest={{ root }}/{{ hostname_1 }}/index.html
   - name: Add phpinfo.php
